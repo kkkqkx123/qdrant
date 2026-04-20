@@ -5,6 +5,7 @@
 Qdrant is a high-performance vector similarity search engine and vector database written in Rust. It provides a production-ready service with a convenient API to store, search, and manage points (vectors with additional payload). Qdrant is tailored for extended filtering support, making it useful for neural-network or semantic-based matching, faceted search, and other AI applications.
 
 ### Key Features
+
 - **Vector Search**: High-performance similarity search with support for dense and sparse vectors
 - **Filtering**: Advanced filtering capabilities with JSON payloads and complex query conditions
 - **Distributed Deployment**: Horizontal scaling through sharding and replication
@@ -29,50 +30,30 @@ The project is organized into several key libraries:
 
 ## Building and Running
 
-### Prerequisites
-- Rust 1.89 or later
-- Cargo
+The graphDB project utilises Cargo as its build system. To build the project:
 
-### Building from Source
-```bash
-# Clone the repository
-git clone https://github.com/qdrant/qdrant.git
-cd qdrant
+1. **Prerequisites**:
 
-# Build in release mode
-cargo build --release
+- rustc: 1.88.0
+- cargo: 1.88.0
 
-# Build with specific features (e.g., GPU support)
-cargo build --release --features=gpu
+2. **Compile check**
+
+```shell
+analyze_cargo --full  # (a cli program to run clippy check and generate report docs)
+cargo fmt
 ```
 
-### Running Qdrant
-```bash
-# Run with default settings
-./target/release/qdrant
+## Development Conventions
 
-# Run with custom configuration
-./target/release/qdrant --config-path /path/to/config.yaml
-
-# Run in distributed mode
-./target/release/qdrant --bootstrap http://bootstrap-peer:6335 --uri http://this-peer:6335
-```
-
-### Docker Deployment
-```bash
-# Pull the official image
-docker pull qdrant/qdrant
-
-# Run with default settings
-docker run -p 6333:6333 qdrant/qdrant
-
-# Run with persistent storage
-docker run -p 6333:6333 -v $(pwd)/qdrant_storage:/qdrant/storage qdrant/qdrant
-```
+- **Coding Style**: Employ Rust standard formatting (`cargo fmt`) and adhere to Rust naming conventions
+- **IDE Integration**: Utilise Rust-compatible editors such as VS Code (rust-analyzer) or IntelliJ IDEA
+- **Testing**: Employ Rust's built-in testing framework (`cargo test`), writing integration tests within the `tests/` directory
 
 ### Configuration
 
 Qdrant uses a hierarchical configuration system:
+
 1. Compile-time defaults (embedded in binary)
 2. Main config file (`config/config.yaml`)
 3. Environment-specific config (`config/{RUN_MODE}.yaml`)
@@ -81,6 +62,7 @@ Qdrant uses a hierarchical configuration system:
 6. Environment variables (prefixed with `QDRANT_`)
 
 Key configuration options:
+
 - `storage.storage_path`: Directory for storing data
 - `storage.snapshots_path`: Directory for storing snapshots
 - `service.http_port`: HTTP API port (default: 6333)
@@ -90,17 +72,15 @@ Key configuration options:
 ## Development Conventions
 
 ### Code Style
+
 - Rust code follows standard Rust formatting (rustfmt)
 - Clippy lints are enforced with specific project settings
 - Code should be documented with Rust doc comments
 
-### Testing
-- Unit tests are located in `tests/` directories within each module
-- Integration tests are in the `tests/` directory at project root
-- Run tests with `cargo test`
-
 ### Features
+
 Qdrant uses Rust features for optional functionality:
+
 - `gpu`: GPU acceleration support
 - `tracing`: Advanced tracing capabilities
 - `console`: Tokio console support
@@ -110,6 +90,7 @@ Qdrant uses Rust features for optional functionality:
 ## API Endpoints
 
 Qdrant provides both REST and gRPC APIs:
+
 - **REST API**: Available at `http://localhost:6333`
 - **gRPC API**: Available at `http://localhost:6334`
 - **OpenAPI Documentation**: Available online at https://api.qdrant.tech/
@@ -117,6 +98,7 @@ Qdrant provides both REST and gRPC APIs:
 ## Client Libraries
 
 Qdrant offers multiple client libraries:
+
 - Official: Python, JavaScript/TypeScript, Go, Rust, .NET/C#, Java
 - Community: Elixir, PHP, Ruby
 
@@ -130,31 +112,7 @@ Qdrant offers multiple client libraries:
 - `Cargo.toml`: Project dependencies and features
 - `Dockerfile`: Container build instructions
 
-## Performance Considerations
+## Language
 
-- Uses jemalloc as the global allocator for better memory management
-- Implements async I/O with Tokio runtime
-- Supports SIMD hardware acceleration
-- Provides vector quantization to reduce memory usage
-- Optimized HNSW index for fast similarity search
-
-## Security
-
-- Supports TLS encryption for both client and inter-cluster communication
-- API key authentication
-- JWT-based role-based access control (RBAC)
-- Configurable CORS settings
-
-## Monitoring and Telemetry
-
-- Prometheus metrics endpoint
-- Optional telemetry reporting to Qdrant developers
-- Request profiling capabilities
-- Hardware utilization reporting (experimental)
-
-## Recovery and Maintenance
-
-- Write-ahead logging (WAL) for data durability
-- Snapshot and recovery mechanisms
-- Automatic optimization of segments
-- Support for recovery mode in case of failures
+Always use English in code, comments, logging, error info. Use Chinese in docs
+**Never use any Chinese in any code files.**

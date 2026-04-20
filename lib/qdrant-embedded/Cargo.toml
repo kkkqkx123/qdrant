@@ -1,0 +1,40 @@
+[package]
+name = "qdrant-embedded"
+version = "1.16.2"
+authors = [
+    "Andrey Vasnetsov <andrey@vasnetsov.com>",
+    "Qdrant Team <info@qdrant.tech>",
+]
+license = "Apache-2.0"
+edition = "2024"
+
+[lints]
+workspace = true
+
+[dependencies]
+ahash = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+schemars = { workspace = true }
+uuid = { workspace = true }
+tokio = { workspace = true }
+rand = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+parking_lot = { workspace = true }
+validator = { workspace = true }
+itertools = { workspace = true }
+ordered-float = { workspace = true }
+fs-err = { workspace = true }
+
+common = { path = "../common/common" }
+segment = { path = "../segment", default-features = false }
+sparse = { path = "../sparse" }
+storage = { path = "../storage" }
+collection = { path = "../collection" }
+shard = { path = "../shard" }
+memory = { path = "../common/memory" }
+
+[dev-dependencies]
+tempfile = { workspace = true }
+tokio = { workspace = true }

@@ -38,6 +38,7 @@ gpu = ["gpu/gpu", "segment/gpu"]
 deb = []
 rocksdb = ["collection/rocksdb", "segment/rocksdb"]
 staging = ["collection/staging", "storage/staging"]
+embedded = ["dep:qdrant-embedded"]
 
 [dev-dependencies]
 serde_urlencoded = "0.7"
@@ -128,6 +129,7 @@ collection = { path = "lib/collection" }
 storage = { path = "lib/storage" }
 api = { path = "lib/api" }
 gpu = { path = "lib/gpu" }
+qdrant-embedded = { path = "lib/qdrant-embedded", optional = true }
 
 actix-multipart = "0.7.2"
 constant_time_eq = "0.4.2"
@@ -333,6 +335,7 @@ members = [
     "lib/shard",
     "lib/sparse",
     "lib/storage",
+    "lib/qdrant-embedded",
 ]
 
 [profile.release]
