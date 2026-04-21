@@ -6,11 +6,13 @@ use storage::content_manager::collection_meta_ops::{
     ChangeAliasesOperation,
 };
 use storage::content_manager::snapshots::{
-    do_delete_collection_snapshot, do_recover_from_snapshot,
+    do_delete_collection_snapshot,
 };
+use storage::content_manager::snapshots::recover::do_recover_from_snapshot;
 use storage::rbac::Access;
 use collection::operations::shard_selector_internal::ShardSelectorInternal;
 use common::counter::hardware_accumulator::HwMeasurementAcc;
+use segment::types::QuantizationConfig;
 
 use crate::client::QdrantEmbedded;
 use crate::error::Result;
@@ -46,10 +48,22 @@ impl QdrantEmbedded {
     }
 
     /// Creating Collections
+    ///
+    /// # Arguments
+    /// * `collection_name` - Name of the collection to create
+    /// * `vectors_config` - Vector configuration (size, distance, etc.)
+    /// * `quantization_config` - Optional quantization configuration for vector compression
+    ///
+    /// # Quantization Options
+    /// - `None`: No quantization (default)
+    /// - `Scalar`: 8-bit scalar quantization, good balance of speed and accuracy
+    /// - `Product`: High compression ratio, ideal for large-scale search
+    /// - `Binary`: Maximum compression, best for approximate search on huge datasets
     pub async fn create_collection(
         &self,
         collection_name: String,
         vectors_config: VectorsConfig,
+        quantization_config: Option<QuantizationConfig>,
     ) -> Result<()> {
         let operation = CreateCollection {
             vectors: vectors_config,
@@ -61,7 +75,7 @@ impl QdrantEmbedded {
             hnsw_config: None,
             wal_config: None,
             optimizers_config: None,
-            quantization_config: None,
+            quantization_config,
             sparse_vectors: None,
             strict_mode_config: None,
             uuid: None,
@@ -74,6 +88,27 @@ impl QdrantEmbedded {
                     create_collection_op,
                 ),
                 Access::full("create_collection"),
+                None,
+            )
+            .await?;
+        Ok(())
+    }
+
+    /// Creating Collections with full configuration
+    ///
+    /// This method provides full control over all collection creation parameters.
+    pub async fn create_collection_full(
+        &self,
+        collection_name: String,
+        operation: CreateCollection,
+    ) -> Result<()> {
+        let create_collection_op = CreateCollectionOperation::new(collection_name, operation)?;
+        self.dispatcher
+            .submit_collection_meta_op(
+                storage::content_manager::collection_meta_ops::CollectionMetaOperations::CreateCollection(
+                    create_collection_op,
+                ),
+                Access::full("create_collection_full"),
                 None,
             )
             .await?;

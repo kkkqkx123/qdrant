@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use collection::optimizers_builder::OptimizersConfig;
 use collection::config::WalConfig;
-use segment::types::HnswConfig;
+use segment::types::{HnswConfig, QuantizationConfig};
 use segment::data_types::collection_defaults::CollectionConfigDefaults;
 
 /// Embedded library configuration
@@ -43,6 +43,8 @@ pub struct EmbeddedConfig {
     pub hnsw_config: Option<HnswConfig>,
     /// Collection default configuration (optional)
     pub collection_defaults: Option<CollectionConfigDefaults>,
+    /// Default quantization configuration for new collections (optional)
+    pub default_quantization_config: Option<QuantizationConfig>,
     
     // Limit Configuration
     /// Maximum number of sets (optional)
@@ -69,6 +71,7 @@ impl Default for EmbeddedConfig {
             wal_config: None,
             hnsw_config: None,
             collection_defaults: None,
+            default_quantization_config: None,
             max_collections: None,
             update_queue_size: None,
         }
@@ -159,6 +162,15 @@ impl EmbeddedConfigBuilder {
 
     pub fn collection_defaults(mut self, defaults: CollectionConfigDefaults) -> Self {
         self.config.collection_defaults = Some(defaults);
+        self
+    }
+
+    /// Set default quantization configuration for new collections
+    ///
+    /// This allows setting a global default quantization that will be applied
+    /// to all new collections unless explicitly overridden.
+    pub fn default_quantization(mut self, config: QuantizationConfig) -> Self {
+        self.config.default_quantization_config = Some(config);
         self
     }
 

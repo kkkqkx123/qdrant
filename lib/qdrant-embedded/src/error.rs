@@ -9,6 +9,9 @@ pub enum EmbeddedError {
     #[error("Operation error: {0}")]
     Operation(#[from] segment::common::operation_error::OperationError),
 
+    #[error("Collection error: {0}")]
+    Collection(#[from] collection::operations::types::CollectionError),
+
     #[error("Collection not found: {0}")]
     CollectionNotFound(String),
 
