@@ -26,6 +26,31 @@ let config = EmbeddedConfig::builder()
     .cpu_limit(4)
     .build();
 let client = QdrantEmbedded::new(config)?;
+
+// 高级配置
+use collection::optimizers_builder::OptimizersConfig;
+use collection::config::WalConfig;
+use segment::types::HnswConfig;
+
+let config = EmbeddedConfig::builder()
+    .storage_path("./data")
+    // 性能配置
+    .search_threads(8)
+    .optimizer_threads(4)
+    .update_rate_limit(1000)
+    .search_timeout_sec(30)
+    .async_scorer(true)
+    // 存储配置
+    .on_disk_payload(true)
+    // 高级配置
+    .optimizers_config(OptimizersConfig::default())
+    .wal_config(WalConfig::default())
+    .hnsw_config(HnswConfig::default())
+    // 限制配置
+    .max_collections(100)
+    .update_queue_size(1000)
+    .build();
+let client = QdrantEmbedded::new(config)?;
 ```
 
 ---
