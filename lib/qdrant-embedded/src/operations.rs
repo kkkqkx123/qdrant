@@ -38,14 +38,14 @@ use collection::grouping::group_by::GroupRequest;
 use collection::operations::types::GroupsResult;
 
 impl QdrantEmbedded {
-    /// 列出所有集合
+    /// List all collections
     pub async fn list_collections(&self) -> Result<Vec<String>> {
         let access = Access::full("list_collections");
         let response = self.toc.all_collections(&access).await;
         Ok(response.into_iter().map(|c| c.name().to_string()).collect())
     }
 
-    /// 创建集合
+    /// Creating Collections
     pub async fn create_collection(
         &self,
         collection_name: String,
@@ -80,7 +80,7 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 删除集合
+    /// Deleting Collections
     pub async fn delete_collection(&self, collection_name: String) -> Result<()> {
         self.dispatcher
             .submit_collection_meta_op(
@@ -94,7 +94,7 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 插入或更新点
+    /// Insert or update points
     pub async fn upsert_points(
         &self,
         collection_name: String,
@@ -112,7 +112,7 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 删除点
+    /// deletion point
     pub async fn delete_points(
         &self,
         collection_name: String,
@@ -130,9 +130,9 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 搜索点（批量）
+    /// Search points (bulk)
     /// 
-    /// 使用 CoreSearchRequestBatch 进行批量搜索
+    /// Bulk Searching with CoreSearchRequestBatch
     pub async fn search_points(
         &self,
         collection_name: &str,
@@ -152,9 +152,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 查询点（批量）
+    /// Inquiry points (batch)
     /// 
-    /// 使用 CollectionQueryRequest 进行查询
+    /// Querying with CollectionQueryRequest
     pub async fn query_points(
         &self,
         collection_name: &str,
@@ -173,9 +173,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 滚动浏览点
+    /// Scroll through the points
     /// 
-    /// 使用 ScrollRequestInternal 进行滚动浏览
+    /// Scrolling with ScrollRequestInternal
     pub async fn scroll_points(
         &self,
         collection_name: &str,
@@ -195,7 +195,7 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 设置 payload
+    /// Setting the payload
     pub async fn set_payload(
         &self,
         collection_name: String,
@@ -255,7 +255,7 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 更新向量
+    /// Update Vector
     pub async fn update_vectors(
         &self,
         collection_name: String,
@@ -273,7 +273,7 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 删除向量
+    /// Deletion Vector
     pub async fn delete_vectors(
         &self,
         collection_name: String,
@@ -291,9 +291,9 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 获取点（按ID）
+    /// Access Points (by ID)
     ///
-    /// 使用 PointRequestInternal 检索指定的点
+    /// Retrieve the specified point using PointRequestInternal
     pub async fn get_points(
         &self,
         collection_name: &str,
@@ -313,9 +313,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 计数点
+    /// measuring point
     ///
-    /// 使用 CountRequestInternal 统计点数量
+    /// Using CountRequestInternal to count points
     pub async fn count_points(
         &self,
         collection_name: &str,
@@ -335,9 +335,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 推荐点
+    /// recommended point
     ///
-    /// 使用 RecommendRequestInternal 进行推荐查询
+    /// Recommendation Queries with RecommendRequestInternal
     pub async fn recommend_points(
         &self,
         collection_name: &str,
@@ -357,9 +357,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 发现点
+    /// point of discovery
     ///
-    /// 使用 DiscoverRequestInternal 进行发现查询
+    /// Discovery Queries with DiscoverRequestInternal
     pub async fn discover_points(
         &self,
         collection_name: &str,
@@ -379,9 +379,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// Facet 聚合
+    /// Facet aggregation
     ///
-    /// 使用 FacetParams 进行聚合查询
+    /// Aggregate Queries with FacetParams
     pub async fn facet(
         &self,
         collection_name: &str,
@@ -401,9 +401,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 搜索点距离矩阵
+    /// Search Point Distance Matrix
     ///
-    /// 使用 CollectionSearchMatrixRequest 计算点之间的距离矩阵
+    /// Use CollectionSearchMatrixRequest to compute the distance matrix between points
     pub async fn search_points_matrix(
         &self,
         collection_name: &str,
@@ -423,9 +423,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 分组查询
+    /// grouping inquiry
     ///
-    /// 使用 GroupRequest 进行分组查询
+    /// Grouping Queries with GroupRequest
     pub async fn group_points(
         &self,
         collection_name: &str,
@@ -445,9 +445,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 获取集合信息
+    /// Getting Collection Information
     ///
-    /// 获取集合的详细配置和状态信息
+    /// Get detailed configuration and status information about the collection
     pub async fn get_collection_info(
         &self,
         collection_name: &str,
@@ -459,9 +459,9 @@ impl QdrantEmbedded {
         Ok(info)
     }
 
-    /// 更新集合配置
+    /// Updating the collection configuration
     ///
-    /// 使用 UpdateCollection 更新集合的参数
+    /// Parameters for updating a collection with UpdateCollection
     pub async fn update_collection(
         &self,
         collection_name: String,
@@ -478,9 +478,9 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 检查集合是否存在
+    /// Check if the collection exists
     ///
-    /// 返回集合是否存在
+    /// Returns whether the collection exists
     pub async fn collection_exists(
         &self,
         collection_name: &str,
@@ -491,18 +491,18 @@ impl QdrantEmbedded {
         Ok(exists)
     }
 
-    /// 列出所有别名
+    /// List all aliases
     ///
-    /// 返回所有集合的别名列表
+    /// Returns a list of aliases for all collections
     pub async fn list_aliases(&self) -> Result<Vec<AliasDescription>> {
         let access = Access::full("list_aliases");
         let aliases = self.toc.list_aliases(&access).await?;
         Ok(aliases)
     }
 
-    /// 列出集合的别名
+    /// List the aliases of a collection
     ///
-    /// 返回指定集合的所有别名
+    /// Returns all aliases of the specified collection
     pub async fn list_collection_aliases(
         &self,
         collection_name: &str,
@@ -516,9 +516,9 @@ impl QdrantEmbedded {
         Ok(aliases)
     }
 
-    /// 更新别名
+    /// Updating aliases
     ///
-    /// 创建、删除或重命名别名
+    /// Creating, deleting or renaming aliases
     pub async fn update_aliases(
         &self,
         operations: ChangeAliasesOperation,
@@ -533,9 +533,9 @@ impl QdrantEmbedded {
         Ok(())
     }
 
-    /// 创建集合快照
+    /// Creating a Collection Snapshot
     ///
-    /// 为指定集合创建快照
+    /// Creates a snapshot of a specified collection
     pub async fn create_snapshot(
         &self,
         collection_name: &str,
@@ -550,9 +550,9 @@ impl QdrantEmbedded {
         Ok(snapshot)
     }
 
-    /// 列出集合快照
+    /// List collection snapshots
     ///
-    /// 返回指定集合的所有快照列表
+    /// Returns a list of all snapshots in the specified collection
     pub async fn list_snapshots(
         &self,
         collection_name: &str,
@@ -568,9 +568,9 @@ impl QdrantEmbedded {
         Ok(snapshots)
     }
 
-    /// 删除集合快照
+    /// Deleting a Collection Snapshot
     ///
-    /// 删除指定的快照文件
+    /// Deletes the specified snapshot file
     pub async fn delete_snapshot(
         &self,
         collection_name: &str,
@@ -585,9 +585,9 @@ impl QdrantEmbedded {
         Ok(result)
     }
 
-    /// 从快照恢复集合
+    /// Restoring a collection from a snapshot
     ///
-    /// 从快照文件恢复集合数据
+    /// Recovering Collection Data from Snapshot Files
     pub async fn recover_from_snapshot(
         &self,
         collection_name: &str,

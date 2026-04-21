@@ -10,24 +10,24 @@ use common::budget::ResourceBudget;
 use crate::config::EmbeddedConfig;
 use crate::error::Result;
 
-/// Qdrant 嵌入库客户端
+/// Qdrant Embedded Library Client
 pub struct QdrantEmbedded {
     pub toc: Arc<TableOfContent>,
     pub dispatcher: Arc<Dispatcher>,
 }
 
 impl QdrantEmbedded {
-    /// 创建新的嵌入库实例
+    /// Creating a New Embedded Library Instance
     pub fn new(config: EmbeddedConfig) -> Result<Self> {
         Self::new_with_runtime(config, None)
     }
 
-    /// 使用指定的 Tokio runtime 创建实例
+    /// Create an instance with the specified Tokio runtime
     pub fn new_with_runtime(
         config: EmbeddedConfig,
         runtime: Option<Runtime>,
     ) -> Result<Self> {
-        // 创建或使用提供的 runtime
+        // Create or use the provided runtime
         let general_runtime = runtime.unwrap_or_else(|| {
             tokio::runtime::Builder::new_multi_thread()
                 .enable_all()
@@ -51,7 +51,7 @@ impl QdrantEmbedded {
             .build()
             .expect("Failed to create update runtime");
 
-        // 转换为 StorageConfig
+        // Convert to StorageConfig
         let storage_config = StorageConfig {
             storage_path: config.storage_path.to_string_lossy().to_string(),
             snapshots_path: config.snapshots_path
@@ -109,7 +109,7 @@ impl QdrantEmbedded {
         );
         let channel_service = ChannelService::new(1000, None);
 
-        // 直接创建 TableOfContent，不使用 block_on
+        // Create TableOfContent directly, without using block_on
         let toc = TableOfContent::new(
             &storage_config,
             search_runtime,

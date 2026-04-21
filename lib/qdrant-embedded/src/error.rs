@@ -1,6 +1,6 @@
 use thiserror::Error;
 
-/// 嵌入库错误类型
+/// Embedded library error types
 #[derive(Error, Debug)]
 pub enum EmbeddedError {
     #[error("Storage error: {0}")]

@@ -4,50 +4,50 @@ use collection::config::WalConfig;
 use segment::types::HnswConfig;
 use segment::data_types::collection_defaults::CollectionConfigDefaults;
 
-/// 嵌入库配置
+/// Embedded library configuration
 #[derive(Debug, Clone)]
 pub struct EmbeddedConfig {
-    /// 存储路径
+    /// Storage Path
     pub storage_path: PathBuf,
-    /// 快照路径（可选）
+    /// Snapshot path (optional)
     pub snapshots_path: Option<PathBuf>,
-    /// 临时文件路径（可选）
+    /// Temporary file path (optional)
     pub temp_path: Option<PathBuf>,
     
-    // 性能配置
-    /// 搜索线程数
+    // Performance Configuration
+    /// Number of search threads
     pub search_threads: Option<usize>,
-    /// 优化线程数
+    /// Optimize the number of threads
     pub optimizer_threads: Option<usize>,
-    /// IO 限制（可选）
+    /// IO limit (optional)
     pub io_limit: Option<usize>,
-    /// CPU 限制（可选）
+    /// CPU limit (optional)
     pub cpu_limit: Option<usize>,
-    /// 更新速率限制（可选）
+    /// Update rate limiting (optional)
     pub update_rate_limit: Option<usize>,
-    /// 搜索超时秒数（可选）
+    /// Search timeout seconds (optional)
     pub search_timeout_sec: Option<usize>,
-    /// 是否使用异步评分器（可选）
+    /// Whether to use an asynchronous scorer (optional)
     pub async_scorer: Option<bool>,
     
-    // 存储配置
-    /// 是否将 payload 存储在磁盘上
+    // Storage Configuration
+    /// Whether to store the payload on disk
     pub on_disk_payload: Option<bool>,
     
-    // 高级配置
-    /// 优化器配置（可选）
+    // Advanced Configuration
+    /// Optimizer configuration (optional)
     pub optimizers_config: Option<OptimizersConfig>,
-    /// WAL 配置（可选）
+    /// WAL configuration (optional)
     pub wal_config: Option<WalConfig>,
-    /// HNSW 索引配置（可选）
+    /// HNSW index configuration (optional)
     pub hnsw_config: Option<HnswConfig>,
-    /// 集合默认配置（可选）
+    /// Collection default configuration (optional)
     pub collection_defaults: Option<CollectionConfigDefaults>,
     
-    // 限制配置
-    /// 最大集合数（可选）
+    // Limit Configuration
+    /// Maximum number of sets (optional)
     pub max_collections: Option<usize>,
-    /// 更新队列大小（可选）
+    /// Update queue size (optional)
     pub update_queue_size: Option<usize>,
 }
 

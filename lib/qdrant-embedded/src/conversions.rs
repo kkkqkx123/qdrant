@@ -1,2 +1,2 @@
-// 嵌入库专用转换函数
-// 这里可以添加嵌入库模式特有的类型转换逻辑
+// Embedded library-specific conversion functions
+// Here you can add type conversion logic specific to the embedded library schema
